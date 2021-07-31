@@ -15,6 +15,21 @@ export default class App extends Component {
       { label: "Have a lunch", important: false, id: 3 },
     ],
   };
+
+  deleteItem = (id) => {
+    // delete item from array todoData
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id);
+      const before = todoData.slice(0, idx);
+      const after = todoData.slice(idx + 1);
+
+      const newArray = [...before, ...after];
+
+      return {
+        todoData: newArray,
+      };
+    });
+  };
   render() {
     return (
       <div className="todo-app">
@@ -24,10 +39,7 @@ export default class App extends Component {
           <ItemStatusFilter />
         </div>
 
-        <TodoList
-          todos={this.state.todoData}
-          onDeleted={(id) => console.log("del", id)}
-        />
+        <TodoList todos={this.state.todoData} onDeleted={this.deleteItem} />
       </div>
     );
   }
