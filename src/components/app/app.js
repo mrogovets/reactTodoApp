@@ -81,6 +81,17 @@ export default class App extends Component {
     });
   };
 
+  searchHandler = (searchText) => {
+    const filterArrTodos = this.state.todoData.filter((el) =>
+      el.label.toLowerCase().includes(searchText.toLowerCase())
+    );
+    if (searchText) {
+      console.log(filterArrTodos);
+    } else {
+      console.log(this.state.todoData);
+    }
+  };
+
   render() {
     const { todoData } = this.state;
     const doneCount = todoData.filter((el) => el.done).length;
@@ -89,7 +100,7 @@ export default class App extends Component {
       <div className="todo-app">
         <AppHeader toDo={todoCount} done={doneCount} />
         <div className="top-panel d-flex">
-          <SearchPanel />
+          <SearchPanel searchHandler={this.searchHandler} />
           <ItemStatusFilter />
         </div>
 
